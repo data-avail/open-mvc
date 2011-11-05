@@ -10,7 +10,7 @@ After install
 Add oauth service keys to web.config files:
 
 Set up keys of your application for oauth services. AppId and AppSecret pair usaually depends on application url, this way it is needed to
-set up diffrent ones for diffrent application enviroments, usually developing, staging and prodaction (becacause they have diffrent urls)
+set up diffrent ones for diffrent application enviroments, usually developing, staging and production (becacause they have diffrent urls)
 There is also brief notices how to make keys work for localhost (developing enviroment)
 
 ###Twitter sign-up: [[https://twitter.com/oauth_clients]]
