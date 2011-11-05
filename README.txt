@@ -3,6 +3,9 @@
 The library allow to login user through externl open id or oauth providers also sustains native registration/logon mechanism.
 You must use library api to get current user identifyer in order to coherent work as for external users as for the locals.
 
+The library is built upon DotNetOpenAuth library version 3.5 since this version only currently supports facebook authentication.
+If you project already has installed another version of DotNetOpenAuth, please uininstall it or at leasr remove reference.
+
 
 After install
 =============
