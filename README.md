@@ -16,7 +16,7 @@ Set up keys of your application for oauth services. AppId and AppSecret pair usa
 set up diffrent ones for diffrent application enviroments, usually developing, staging and production (becacause they have diffrent urls)
 There is also brief notices how to make keys work for localhost (developing enviroment)
 
-###Twitter sign-up: [[https://twitter.com/oauth_clients]]
+###[Twitter sign-up](https://twitter.com/oauth_clients): 
 
 <add key="twitterConsumerKey" value="XXX" />
 <add key="twitterConsumerSecret" value="XXX" />
@@ -25,7 +25,7 @@ notice for localhost:
 	WebSite : any (not empty)
 	Callback Url : any (not empty)
 
-###Facebook sign-up: [[http://developers.facebook.com/setup/]]
+###[Facebook sign-up](http://developers.facebook.com/setup/): 
 <add key="facebookAppID" value="XXX" />
 <add key="facebookAppSecret" value="XXX" />
 
@@ -34,7 +34,7 @@ notice for localhost:
 					   port_number - port where your site running, it is important
 	App domain : empty
 
-###VKontakte sign-up: [[http://vkontakte.ru/editapp?act=create&site=1]]
+###[VKontakte sign-up](http://vkontakte.ru/editapp?act=create&site=1): 
 <add key="vkontakteAppID" value="XXX" />
 <add key="vkontakteAppSecret" value="XXX" />
 
@@ -48,14 +48,20 @@ Under the hoods
 
 When ext-user login to your site, the library is check whether he already registered and if not register it in your membership provider.
 The new ext-user registered (in membership provider) with following attributes:
-###Id - MD5 hash of ServiceType:ServiceKey
-		where ServiceType - on of the prdefined service types "Twitter", "Facebook", "Google", "OpenId"
-		ServiceKey - id of user returned from oauth service or open id url of user.
-		When your application know service type and id of user in the service your always can find one in your membership provider.
-###Name - <user-GUID> where guid arbitrary generated guid. The user name in this case is not intended to display to user and must be used internally by library.
-###Password - MD5 hash of Name GUID
-###ServiceType - (see Id.ServiceType) the parameter store to the profile provider with name ServiceType 
-###UserName - the display friendly name of the user in the external system, the parameter store to the profile provider with name UserName
+###Id 
+MD5 hash of ServiceType:ServiceKey
+where ServiceType - on of the prdefined service types "Twitter", "Facebook", "Google", "OpenId"
+ServiceKey - id of user returned from oauth service or open id url of user.
+When your application know service type and id of user in the service your always can find one in your membership provider.
+###Name
+<user-GUID>
+where guid arbitrary generated guid. The user name in this case is not intended to display to user and must be used internally by library.
+###Password
+MD5 hash of Name GUID
+###ServiceType 
+(see Id.ServiceType) the parameter store to the profile provider with name ServiceType 
+###UserName 
+the display friendly name of the user in the external system, the parameter store to the profile provider with name UserName
 
 Security considerations 
 -----------------------
