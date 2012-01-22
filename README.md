@@ -54,7 +54,7 @@ where ServiceType - on of the prdefined service types "Twitter", "Facebook", "Go
 ServiceKey - id of user returned from oauth service or open id url of user.
 When your application know service type and id of user in the service your always can find one in your membership provider.
 ###Name
-<user-GUID>
+&lt;user-GUID&gt;
 where guid arbitrary generated guid. The user name in this case is not intended to display to user and must be used internally by library.
 ###Password
 MD5 hash of Name GUID
