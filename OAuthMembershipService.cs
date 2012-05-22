@@ -282,7 +282,6 @@ namespace DataAvail.Mvc.Account
 
             HttpContext.Current.Response.SetUserIdentifyer(new OAuthUserIdentifyer { UserName = UserName, ServiceIdentifyer = servIdent });
         }
-
         
         private MembershipUser GetUserByServiceKey(OAuthServiceLogOnIdentifyer ServiceIdentifyer)
         {

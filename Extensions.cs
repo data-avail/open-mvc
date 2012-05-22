@@ -165,6 +165,6 @@ namespace DataAvail.Mvc.Account
             var s = ValueProvider.GetAttemptedValue(Name);
 
             return !string.IsNullOrEmpty(s) ? (T?)System.ComponentModel.TypeDescriptor.GetConverter(typeof(Type)).ConvertFrom(s) : null;
-        }      
+        }
     }
 }

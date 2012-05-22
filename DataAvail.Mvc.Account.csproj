@@ -67,7 +67,6 @@
     <Content Include="nuget\content\Scripts\da.openid.js" />
     <Content Include="nuget\lib\net40\DotNetOpenAuth.ApplicationBlock.dll" />
     <Content Include="nuget\lib\net40\DotNetOpenAuth.dll" />
-    <Content Include="README.txt" />
     <None Include="da.openid.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>da.openid.js</LastGenOutput>

@@ -79,21 +79,37 @@ namespace DataAvail.Mvc.Account
             return true;
         }
 
-        private ActionResult OAuthGetExtWindowSuccessResult(string ReturnUrl)
+        private ActionResult OAuthGetExtWindowSuccessResult(string UserName, string ReturnUrl)
         {
+            string js = null;
+
             if (string.IsNullOrEmpty(ReturnUrl))
             {
-                ReturnUrl = "window.opener.location.href";
+                js = "window.opener.location.href = window.opener.location.href";
+            }
+            else 
+            {
+                ReturnUrl = ReturnUrl.Replace("$user", UserName);
+                if (ReturnUrl.StartsWith("#"))
+                {
+                    //hasher
+                    ReturnUrl = ReturnUrl.Remove(0, 1);
+                    js = string.Format("window.opener.location.hash = '{0}'", ReturnUrl);
+                }
+                else
+                {
+                    js = string.Format("window.opener.location.href = '{0}'", ReturnUrl);
+                }
             }
 
-            return Content(string.Format("<!HTML><header></header><dody><script>window.opener.location.href = '{0}'; window.close();</script></body>", ReturnUrl), "text/html");
+            return Content(string.Format("<!HTML><header></header><dody><script>{0}; window.close();</script></body>", js), "text/html");
         }
 
-        private ActionResult GetSuccessResult(OAuthServiceType ServiceType, string ReturnUrl)
+        private ActionResult GetSuccessResult(OAuthServiceType ServiceType, string UserName, string ReturnUrl)
         {
             if (OAuthIsExtWindow(ServiceType))
             {
-                return OAuthGetExtWindowSuccessResult(ReturnUrl);
+                return OAuthGetExtWindowSuccessResult(UserName, ReturnUrl);
             }
             else
             {
@@ -182,7 +198,7 @@ namespace DataAvail.Mvc.Account
                             userName = lastName;
                     }
                     OAuthRegisterOrLoginExternalUser(userName, new OAuthServiceLogOnIdentifyer(servType, response.ClaimedIdentifier));
-                    return GetSuccessResult(servType, returnUrl);
+                    return GetSuccessResult(servType, userName, returnUrl);
                 case AuthenticationStatus.Canceled:
                 case AuthenticationStatus.Failed:
                     return OAuthGetErrorResult(response.Exception != null ? response.Exception.Message : null);
@@ -218,7 +234,7 @@ namespace DataAvail.Mvc.Account
 
                     if (err == null)
                     {
-                        return GetSuccessResult(OAuthServiceType.Twitter, returnUrl);
+                        return GetSuccessResult(OAuthServiceType.Twitter, screenName, returnUrl);
                     }
 
                 }
@@ -253,7 +269,7 @@ namespace DataAvail.Mvc.Account
 
                             if (err == null)
                             {
-                                return GetSuccessResult(OAuthServiceType.Facebook, returnUrl);
+                                return GetSuccessResult(OAuthServiceType.Facebook, graph.Name, returnUrl);
                             }
 
                         }
@@ -313,8 +329,25 @@ namespace DataAvail.Mvc.Account
 
             OAuthMembershipService.LogOn(UserName, ServiceIdentifyer);
 
+            Response.Cookies.Add(new HttpCookie(".ASPXAUTH_USER", UserName));
+
             return null;
         }
+
+        public ActionResult OAuthLogOff()
+        {
+            FormsAuthentication.SignOut();
+
+            if (Request.Cookies[".ASPXAUTH_USER"] != null)
+            {
+                HttpCookie userCookie = new HttpCookie(".ASPXAUTH_USER");
+                userCookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(userCookie);
+            }
+
+            return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+        }
+
 
 
         /// <summary>
